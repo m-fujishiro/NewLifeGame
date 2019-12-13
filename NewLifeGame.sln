@@ -1,0 +1,19 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewLifeGame", "NewLifeGame", "{EB90B8C1-9D6C-4181-B66D-D256E2451581}"
+	ProjectSection(SolutionItems) = preProject
+		Index.html = Index.html
+		StyleSheet1.css = StyleSheet1.css
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {69477998-F4BF-473D-93DC-F9A3E44DA347}
+	EndGlobalSection
+EndGlobal

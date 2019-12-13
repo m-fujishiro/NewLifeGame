@@ -24,8 +24,7 @@ function White(this_selector) {
     if (!isSelected) $(this_selector).addClass("selected");
 }
 
-//二回目以降色が変わらない
-//むしろ何故か一回目は色が変わってしまう、のか？
+//一回目だけ色が変わらない
 function None(this_selector) {
     var selected = $(".selected");
     //選択状態が無かったら終了

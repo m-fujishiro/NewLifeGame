@@ -24,6 +24,8 @@ function White(this_selector) {
     if (!isSelected) $(this_selector).addClass("selected");
 }
 
+//二回目以降色が変わらない
+//むしろ何故か一回目は色が変わってしまう、のか？
 function None(this_selector) {
     var selected = $(".selected");
     //選択状態が無かったら終了
@@ -40,7 +42,7 @@ function None(this_selector) {
 
 $(".cell").click(function () {
     if ($(this).hasClass("white")) White($(this));
-    else None($(this));
+    else if ($(this).hasClass("none")) None($(this));
 });
 
 function Next() {
@@ -99,7 +101,7 @@ function Next() {
      *  0%, 25%はblack属性
      * 75%,100%はwhite属性をつける
      * 50%はnone属性をつける
-     * 0%{color:#000000},25%{color:#404040},50%{color:#808080},75%{color:#BFBFBF},100%{color:#FFFFFF}
+     * 0%{background-color:#000000},25%{background-color:#404040},50%{background-color:#808080},75%{background-color:#BFBFBF},100%{background-color:#FFFFFF}
      */
     for (let i = 0; i < 15; i++) {
         for (let j = 0; j < 15; j++) {

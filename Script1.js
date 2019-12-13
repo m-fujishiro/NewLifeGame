@@ -45,3 +45,33 @@ $(".cell").click(function () {
     if ($(this).hasClass("none")) None($(this));
 });
 
+function Next() {
+    /*
+     * Whiteの白さ+25%,Blackの白さ-25%
+     * 一時的になんか変数作って色を最後に適応しよう
+     * 0%=>-25%, 25%=>0%, 50%=>50%, 75%=>100%, 100%=>125%
+     */
+    /*
+     * white属性のものと接していたら+25%
+     * black属性のものと接していたら-25%
+     */
+    /*
+     * 0以下だったら0%,100%以上だったら100%に変える
+     * 0%{color:#000000},25%{color:#404040},50%{color:#808080},75%{color:#BFBFBF},100%{color:#FFFFFF}
+     */
+
+    /*
+     * 全てのセルのクラスをcellクラスのみにする
+     * 0%, 25%はblack属性
+     * 75%,100%はwhite属性をつける
+     * 50%はnone属性をつける
+     */
+    do {
+        var black = $("#cell-" + Math.floor(Math.random() * 15) + "-" + Math.floor(Math.random() * 15));
+    } while ($(black).attr("class") !== "cell none");
+    $(black).addClass("black");
+    $(black).removeClass("none");
+    $(black).text("B");
+}
+
+

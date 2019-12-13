@@ -1,0 +1,48 @@
+﻿body {
+    text-align: center;
+    width: 50%;
+    margin: auto;
+}
+
+button[name="next"] {
+    display: block;
+    margin: 0 0 0 auto;
+}
+
+.board {
+    height:50%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.cell {
+    padding: 10px; /* 余白指定 */
+    border-radius: 5px; /* 角丸指定 */
+    margin: 3px; /* 周りの余白指定 */
+    color: #808080; /* 文字色指定 */
+    border: solid 1px #ffffff;
+}
+
+.black {
+    background-color:#000000;
+}
+.black:before {
+    content:"B";
+}
+.white {
+    background-color: #ffffff;
+}
+.white:before {
+    content: "W";
+}
+.none {
+    background-color: #808080;
+}
+.none:before {
+    content: "N";
+}
+
+.selected {
+    border:solid 1px #000000;
+}

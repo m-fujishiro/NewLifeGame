@@ -33,10 +33,11 @@ function None(this_selector) {
     console.assert($(selected).length === 1, "選択状態が複数存在します。");
     $(this_selector).removeClass();
     $(this_selector).addClass($(selected).attr("class"));
-    $(this_selector).css("background-color", $(selected).attr("background-color"));
+    var old_color = $(this_selector).css("background-color");
+    $(this_selector).css("background-color", $(selected).css("background-color"));
     $(selected).removeClass();
     $(selected).addClass("cell none");
-    $(selected).css("background-color", $(this_selector).attr("background-color"));
+    $(selected).css("background-color", old_color);
     $(this_selector).removeClass("selected");
 }
 
@@ -115,10 +116,10 @@ function Next() {
             $(selector).css("background-color", color);
         }
     }
-
+    if ($(".none").length < 1) return;
     do {
         var black = $("#cell-" + Math.floor(Math.random() * 15) + "-" + Math.floor(Math.random() * 15));
-    } while ($(black).attr("class") !== "cell none");
+    } while (!$(black).hasClass("none"));
     $(black).addClass("black");
     $(black).removeClass("none");
     $(black).text("B");

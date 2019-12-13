@@ -29,9 +29,6 @@ function None(this_selector) {
     //選択状態が無かったら終了
     if ($(selected).length < 1) return;
     console.assert($(selected).length === 1, "選択状態が複数存在します。");
-
-    console.log($(selected).attr("class"));
-
     $(this_selector).removeClass();
     $(this_selector).addClass($(selected).attr("class"));
     $(this_selector).css("color", $(selected).attr("color"));

@@ -31,15 +31,16 @@ function None(this_selector) {
     console.assert($(selected).length === 1, "選択状態が複数存在します。");
     $(this_selector).removeClass();
     $(this_selector).addClass($(selected).attr("class"));
-    $(this_selector).css("color", $(selected).attr("color"));
+    $(this_selector).css("background-color", $(selected).attr("background-color"));
     $(selected).removeClass();
     $(selected).addClass("cell none");
+    $(selected).css("background-color", $(this_selector).attr("background-color"));
     $(this_selector).removeClass("selected");
 }
 
 $(".cell").click(function () {
     if ($(this).hasClass("white")) White($(this));
-    if ($(this).hasClass("none")) None($(this));
+    else None($(this));
 });
 
 function Next() {
@@ -48,21 +49,71 @@ function Next() {
      * 一時的になんか変数作って色を最後に適応しよう
      * 0%=>-25%, 25%=>0%, 50%=>50%, 75%=>100%, 100%=>125%
      */
+    var white_value = Array(15);
+    for (let i = 0; i < 15; i++) {
+        white_value[i] = Array(15);
+        for (let j = 0; j < 15; j++) {
+            let color = $("#cell-" + i + "-" + j).css("background-color");
+            switch (color) {
+                case "rgb(0, 0, 0)": white_value[i][j] = -25; break;
+                case "rgb(64, 64, 64)": white_value[i][j] = 0; break;
+                case "rgb(128, 128, 128)": white_value[i][j] = 50; break;
+                case "rgb(191, 191, 191)": white_value[i][j] = 100; break;
+                case "rgb(255, 255, 255)": white_value[i][j] = 125; break;
+                default: console.log(color); white_value[i][j] = 50; break;
+            }
+        }
+    }
     /*
      * white属性のものと接していたら+25%
      * black属性のものと接していたら-25%
      */
-    /*
-     * 0以下だったら0%,100%以上だったら100%に変える
-     * 0%{color:#000000},25%{color:#404040},50%{color:#808080},75%{color:#BFBFBF},100%{color:#FFFFFF}
-     */
+    for (let i = 0; i < 15; i++) {
+        for (let j = 0; j < 15; j++) {
+            if (i > 0) {
+                if ($("#cell-" + (i - 1) + "-" + j).hasClass("white")) white_value[i][j] += 25;
+                else if ($("#cell-" + (i - 1) + "-" + j).hasClass("black")) white_value[i][j] -= 25;
+            }
+            if (i + 1 < 15) {
+                if ($("#cell-" + (i + 1) + "-" + j).hasClass("white")) white_value[i][j] += 25;
+                else if ($("#cell-" + (i + 1) + "-" + j).hasClass("black")) white_value[i][j] -= 25;
+            }
+            if (j > 0) {
+                if ($("#cell-" + i + "-" + (j - 1)).hasClass("white")) white_value[i][j] += 25;
+                else if ($("#cell-" + i + "-" + (j - 1)).hasClass("black")) white_value[i][j] -= 25;
+            }
+            if (j + 1 < 15) {
+                if ($("#cell-" + i + "-" + (j + 1)).hasClass("white")) white_value[i][j] += 25;
+                else if ($("#cell-" + i + "-" + (j + 1)).hasClass("black")) white_value[i][j] -= 25;
+            }
 
+            /*
+             * 0以下だったら0%,100%以上だったら100%に変える
+             */
+            if (white_value[i][j] < 0) white_value[i][j] = 0;
+            else if (white_value[i][j] > 100) white_value[i][j] = 100;
+        }
+    }
     /*
-     * 全てのセルのクラスをcellクラスのみにする
-     * 0%, 25%はblack属性
+     * セルのクラスをcellクラスのみにする
+     *  0%, 25%はblack属性
      * 75%,100%はwhite属性をつける
      * 50%はnone属性をつける
+     * 0%{color:#000000},25%{color:#404040},50%{color:#808080},75%{color:#BFBFBF},100%{color:#FFFFFF}
      */
+    for (let i = 0; i < 15; i++) {
+        for (let j = 0; j < 15; j++) {
+            let selector = $("#cell-" + i + "-" + j);
+            $(selector).removeClass();
+            $(selector).addClass("cell");
+            let class_name = white_value[i][j] > 50 ? "white" : white_value[i][j] < 50 ? "black" : "none";
+            $(selector).addClass(class_name);
+            let color = white_value[i][j] === 0 ? "#000000" : white_value[i][j] < 50 ? "#404040" :
+                white_value[i][j] === 50 ? "#808080" : white_value[i][j] < 100 ? "#BFBFBF" : "#FFFFFF";
+            $(selector).css("background-color", color);
+        }
+    }
+
     do {
         var black = $("#cell-" + Math.floor(Math.random() * 15) + "-" + Math.floor(Math.random() * 15));
     } while ($(black).attr("class") !== "cell none");

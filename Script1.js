@@ -9,13 +9,15 @@ for (let i = 0; i < 2; i++) {
     $(white).addClass("white");
     $(white).removeClass("none");
 }
-{
+for (let i = 0; i < 5; i++){
     let black = $("#cell-" + Math.floor(Math.random() * 15) + "-" + Math.floor(Math.random() * 15));
     $(black).addClass("black");
     $(black).removeClass("none");
 }
 
 function White(this_selector) {
+    //ToDo:白同士で色を変える
+
     //選択状態を取得する
     var isSelected = $(this_selector).hasClass("selected");
     //全部のselected属性を消す
@@ -32,17 +34,28 @@ function None(this_selector) {
     console.assert($(selected).length === 1, "選択状態が複数存在します。");
     $(this_selector).removeClass();
     $(this_selector).addClass($(selected).attr("class"));
-    var old_color = $(this_selector).css("background-color");
     $(this_selector).css("background-color", $(selected).css("background-color"));
     $(selected).removeClass();
     $(selected).addClass("cell none");
-    $(selected).css("background-color", old_color);
+    $(selected).css("background-color", "#808080");
     $(this_selector).removeClass("selected");
+}
+
+function Black(this_selector) {
+    var selected = $(".selected");
+    if ($(selected).css("background-color") !== "rgb(255, 255, 255)") return;
+    $(selected).removeClass();
+    $(selected).addClass("cell none");
+    $(selected).css("background-color", "#808080");
+    $(this_selector).removeClass();
+    $(this_selector).addClass("cell none");
+    $(this_selector).css("background-color", "#808080");
 }
 
 $(".cell").click(function () {
     if ($(this).hasClass("white")) White($(this));
     else if ($(this).hasClass("none")) None($(this));
+    else Black($(this));
 });
 
 function Next() {
